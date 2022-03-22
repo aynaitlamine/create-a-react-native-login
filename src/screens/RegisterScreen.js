@@ -9,7 +9,7 @@ import Button from '../components/Button'
 import GoogleLogin from '../components/GoogleLogin'
 import BackButton from '../components/BackButton'
 
-const ResetPasswordScreen = () => {
+const RegisterScreen = () => {
   return (
     <Background>
         <BackButton />
@@ -30,7 +30,7 @@ const ResetPasswordScreen = () => {
   )
 }
 
-export default ResetPasswordScreen
+export default RegisterScreen
 
 const styles = StyleSheet.create({
     row: {
