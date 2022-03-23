@@ -1,4 +1,5 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-paper'
 import React from 'react'
 import Background from '../components/Background'
@@ -12,21 +13,22 @@ import BackButton from '../components/BackButton'
 
 
 const LoginScreen = () => {
+  const navigation = useNavigation();
   return (
     <Background>
         <BackButton />
       <Logo />
       <Header>Welcome back</Header>
-      <TextInput label="Email"></TextInput>
+      <TextInput label="E-mail"></TextInput>
       <TextInput label="Password"></TextInput>
-      <View style={styles.forgotPassword}>
+      <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ResetPassword')}>
           <Text style={styles.forgot}>Forgot your password?</Text>
-      </View>
-      <Button mode="contained">Login</Button>
+      </TouchableOpacity>
+      <Button mode="contained" onPress={() => navigation.navigate("Home")}>Login</Button>
       <GoogleLogin />
       <View style={styles.row}>
         <Text>Don't have an account? </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>

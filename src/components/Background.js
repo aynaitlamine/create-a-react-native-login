@@ -1,14 +1,15 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView,  ScrollView } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
 import { theme } from '../core/theme'
 
 
 const Background = ({children}) => {
   return (
     <View style={styles.background}>
-      <KeyboardAvoidingView style={styles.container} behavior="padding">
-        {children}
-      </KeyboardAvoidingView>
+        <KeyboardAvoidingView style={styles.container} behavior="padding">
+          {children}
+        </KeyboardAvoidingView>
     </View>
+    
   )
 }
 

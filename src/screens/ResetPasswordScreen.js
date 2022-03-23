@@ -15,7 +15,7 @@ const ResetScreen = () => {
       <Logo />
       <Header>Restore Password</Header>
       <TextInput 
-        label="E-mail address"
+        label="E-mail"
         description="You will receive email with password reset link."
       />
       <Button

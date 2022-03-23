@@ -1,4 +1,5 @@
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
+import { useNavigation } from '@react-navigation/native';
 import { Text } from 'react-native-paper'
 import { theme } from '../core/theme'
 import Background from '../components/Background'
@@ -10,20 +11,21 @@ import GoogleLogin from '../components/GoogleLogin'
 import BackButton from '../components/BackButton'
 
 const RegisterScreen = () => {
+  const navigation = useNavigation();
   return (
     <Background>
         <BackButton />
       <Logo />
       <Header>Create account</Header>
       <TextInput label="Name"></TextInput>
-      <TextInput label="Email"></TextInput>
+      <TextInput label="E-mail"></TextInput>
       <TextInput label="Password"></TextInput>
       <Button mode="contained" style={{ marginTop: 24 }}>Sign up</Button>
       <GoogleLogin />
       <View style={styles.row}>
-        <Text>Don't have an account? </Text>
-        <TouchableOpacity>
-          <Text style={styles.link}>Sign up</Text>
+        <Text>Already have an account? </Text>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>
     </Background>
