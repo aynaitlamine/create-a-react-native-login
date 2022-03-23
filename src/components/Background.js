@@ -1,11 +1,12 @@
-import { StyleSheet, Text, View, KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text, View, KeyboardAvoidingView, Platform } from 'react-native'
+import { getStatusBarHeight } from 'react-native-status-bar-height';
 import { theme } from '../core/theme'
 
 
 const Background = ({children}) => {
   return (
     <View style={styles.background}>
-        <KeyboardAvoidingView style={styles.container} behavior="padding">
+        <KeyboardAvoidingView style={styles.container} keyboardVerticalOffset={0} behavior="height">
           {children}
         </KeyboardAvoidingView>
     </View>

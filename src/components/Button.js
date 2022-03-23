@@ -22,7 +22,7 @@ export default Button
 const styles = StyleSheet.create({
     button: {
         width: '100%',
-        marginVertical: 10,
+        marginVertical: 5,
         paddingVertical: 2,
       },
       text: {

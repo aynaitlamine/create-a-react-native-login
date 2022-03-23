@@ -8,7 +8,6 @@ const Main = () => {
     const Tab = createBottomTabNavigator();
     return (
     <Tab.Navigator 
-        initialRouteName="Home" 
         screenOptions={{
             headerShown: false,
             tabBarShowLabel: false,
