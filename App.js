@@ -1,8 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Provider as PaperProvider, Button } from 'react-native-paper';
-import { getApp, initializeApp } from "firebase/app";
-import { firebaseConfig } from './src/core/config'
+import { Provider as PaperProvider } from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Main from './src/navigation/Main';
@@ -20,11 +17,6 @@ import {
 
 export default function App() {
   const Stack = createNativeStackNavigator();
-  if (getApp().length < 1) {
-    initializeApp(firebaseConfig);
-    // Initialize other firebase products here
-  }
-  
   return (
     <PaperProvider theme={theme}>
       <NavigationContainer>
@@ -50,12 +42,3 @@ export default function App() {
     </PaperProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

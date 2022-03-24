@@ -1,19 +1,17 @@
 import { View, StyleSheet, TouchableOpacity, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import { Text } from 'react-native-paper'
+import { TextInput as Input, Text } from 'react-native-paper'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
+import React, {useState} from 'react'
+import { signUpUser }  from '../api/auth-api';
 import { theme } from '../core/theme'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
-import Header from '../components/Header'
-import TextInput from '../components/TextInput'
-import Button from '../components/Button'
-import GoogleLogin from '../components/GoogleLogin'
-import BackButton from '../components/BackButton'
+import { Logo, Header, TextInput, Button, Background, GoogleLogin, SnackBar, BackButton } from '../components'
 
 const RegisterScreen = () => {
   const navigation = useNavigation();
+  const [error, setError] = useState();
+  const [passwordVisible, setPasswordVisible] = useState(true);
   const user = {
     name: '',
     email: '',
@@ -24,6 +22,13 @@ const RegisterScreen = () => {
     email: Yup.string().email('Invalid email!').required('Email is required!'),
     password: Yup.string().min(8, 'Password is too short!').required('Password is required!'),
   });
+
+  const onRegisterPress = async (name,email, password) =>{
+    const response = await signUpUser({name, email, password})
+    if (response.error) {
+      setError(response.error)
+    } 
+  } 
   return (
     <Background>
         <BackButton />
@@ -32,13 +37,40 @@ const RegisterScreen = () => {
       <Formik
         initialValues={user}
         validationSchema={validationSchema}
-        onSubmit={values => console.log(values)}
+        onSubmit={values => onRegisterPress(values.name, values.email , values.password)}
       >
         {({ handleChange, handleSubmit, values, errors }) => (
         <>
-          <TextInput label="Name" value={values.name} onChangeText={handleChange('name')} error={errors.name}></TextInput>
-          <TextInput label="E-mail" value={values.email} onChangeText={handleChange('email')} error={errors.email}></TextInput>
-          <TextInput label="Password" value={values.password} onChangeText={handleChange('password')} error={errors.password}></TextInput>
+          <TextInput 
+            label="Name" 
+            value={values.name} 
+            onChangeText={handleChange('name')} 
+            error={errors.name}
+            autoCapitalize='none'
+          >
+          </TextInput>
+
+          <TextInput 
+            label="E-mail" 
+            value={values.email} 
+            onChangeText={handleChange('email')} 
+            error={errors.email}
+            autoCapitalize='none'
+          >
+          </TextInput>
+
+          <TextInput 
+            label="Password" 
+            value={values.password} 
+            onChangeText={handleChange('password')} 
+            error={errors.password} 
+            secureTextEntry={passwordVisible}
+            right={
+              <Input.Icon name={passwordVisible ? "eye" : "eye-off"
+              } onPress={() => setPasswordVisible(!passwordVisible)} />
+            }
+            autoCapitalize='none'
+          ></TextInput>
           <Button mode="contained" style={{ marginTop: 24 }} onPress={handleSubmit}>Sign up</Button>
         </>
       )}
@@ -50,6 +82,7 @@ const RegisterScreen = () => {
           <Text style={styles.link}>Login</Text>
         </TouchableOpacity>
       </View>
+      <SnackBar message={error} onDismiss={() => setError('')} />
     </Background>
   )
 }

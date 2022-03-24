@@ -1,22 +1,19 @@
 import { View, StyleSheet, TouchableOpacity } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
+import { TextInput as Input } from 'react-native-paper'
 import { Text } from 'react-native-paper'
-import React from 'react'
+import React, {useState} from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup';
-import Background from '../components/Background'
-import Logo from '../components/Logo'
-import Header from '../components/Header'
-import Button from '../components/Button'
-import TextInput from '../components/TextInput'
-import GoogleLogin from '../components/GoogleLogin'
-import BackButton from '../components/BackButton'
+import { Logo, Header, TextInput, Button, Background, GoogleLogin, SnackBar, BackButton } from '../components'
 import { theme } from '../core/theme'
 import { loginUser } from '../api/auth-api';
 
 
 const LoginScreen = () => {
   const navigation = useNavigation();
+  const [error, setError] = useState();
+  const [passwordVisible, setPasswordVisible] = useState(true);
   const user = {
     email: '',
     password: '',
@@ -27,8 +24,10 @@ const LoginScreen = () => {
   });
 
   const onLoginPress = async (email, password) =>{
-
-    navigation.navigate('AuthLoading')
+    const response = await loginUser({email, password})
+    if (response.error) {
+      setError(response.error)
+    } 
   } 
 
   return (
@@ -40,19 +39,38 @@ const LoginScreen = () => {
         initialValues={user}
         validationSchema={validationSchema}
         validateOnChange={false}
-        onSubmit={values => onLoginPress(values.email, onLoginPress.password) }
+        onSubmit={values => onLoginPress(values.email, values.password) }
       >
         {({ handleChange, handleSubmit, handleBlur, values, errors }) => (
           <>
-            <TextInput label="E-mail" value={values.email} onChangeText={handleChange('email')} onBlur={handleBlur('email')} error={errors.email}></TextInput>
-            <TextInput label="Password" value={values.password} onChangeText={handleChange('password')} error={errors.password}></TextInput>
+            <TextInput 
+              label="E-mail" 
+              value={values.email} 
+              onChangeText={handleChange('email')} 
+              error={errors.email}
+              autoCapitalize='none'
+            >
+            </TextInput>
+            <TextInput 
+              label="Password" 
+              value={values.password} 
+              onChangeText={handleChange('password')} 
+              error={errors.password} 
+              secureTextEntry={passwordVisible}
+              right={
+                <Input.Icon name={passwordVisible ? "eye" : "eye-off"
+                } onPress={() => setPasswordVisible(!passwordVisible)} />
+              }
+              autoCapitalize='none'
+            >
+            </TextInput>
           
       
-        <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ResetPassword')}>
-            <Text style={styles.forgot}>Forgot your password?</Text>
-        </TouchableOpacity>
-        <Button mode="contained" onPress={handleSubmit}>Login</Button>
-        </>
+            <TouchableOpacity style={styles.forgotPassword} onPress={() => navigation.navigate('ResetPassword')}>
+                <Text style={styles.forgot}>Forgot your password?</Text>
+            </TouchableOpacity>
+            <Button mode="contained" onPress={handleSubmit}>Login</Button>
+          </>
         )}
       </Formik>
       <GoogleLogin />
@@ -62,6 +80,7 @@ const LoginScreen = () => {
           <Text style={styles.link}>Sign up</Text>
         </TouchableOpacity>
       </View>
+      <SnackBar message={error} onDismiss={() => setError('')} />
     </Background>
   )
 }

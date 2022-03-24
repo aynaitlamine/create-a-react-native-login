@@ -1,11 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
-import Background from '../components/Background'
 import React from 'react'
-import Logo from '../components/Logo'
-import Header  from '../components/Header'
-import Paraghraph from '../components/Paraghraph'
-import Button from '../components/Button'
+import { Logo, Header, Paraghraph, Button, Background } from '../components'
 import { theme } from '../core/theme'
 
 const StartScreen = () => {

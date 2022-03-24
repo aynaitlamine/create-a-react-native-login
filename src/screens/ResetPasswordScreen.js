@@ -1,12 +1,7 @@
 import { StyleSheet, View } from 'react-native'
 import { Text } from 'react-native-paper'
 import React from 'react'
-import Background from '../components/Background'
-import Logo from '../components/Logo'
-import Header from '../components/Header'
-import TextInput from '../components/TextInput'
-import Button from '../components/Button'
-import BackButton from '../components/BackButton'
+import { Logo, Header, TextInput, Button, Background, BackButton } from '../components'
 
 const ResetScreen = () => {
   return (

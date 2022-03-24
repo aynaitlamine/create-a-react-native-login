@@ -1,12 +1,12 @@
 import { StyleSheet, Text, View } from 'react-native'
-import Button from '../components/Button'
-import BackButton from '../components/BackButton'
+import { logoutUser } from '../api/auth-api'
+import { Button, BackButton } from '../components'
 
 const ProfileScreen = () => {
   return (
     <View style={styles.container}>
       <BackButton />
-      <Button mode="contained" style={{width: 160}} onPress={()=> console.log(1)}> Logout</Button>
+      <Button mode="contained" style={{width: 160}} onPress={logoutUser}> Logout</Button>
     </View>
   )
 }

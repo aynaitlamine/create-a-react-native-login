@@ -1,11 +1,15 @@
-import { StyleSheet, Text, View } from 'react-native'
-import Button from '../components/Button'
+import { StyleSheet, View } from 'react-native'
+import { Text } from 'react-native-paper'
+import { getAuth } from "firebase/auth";
+import { app } from '../core/config'
 
 
 const HomeScreen = () => {
+  const auth = getAuth(app);
+  const user = auth.currentUser;
   return (
     <View style={styles.container}>
-      <Button mode="contained" style={{width: 160}}>Press me</Button>
+      <Text>{ user.displayName }</Text>
     </View>
   )
 }
